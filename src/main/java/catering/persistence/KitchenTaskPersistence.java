@@ -4,7 +4,6 @@ import catering.businesslogic.kitchen.Assignment;
 import catering.businesslogic.kitchen.KitchenTaskEventReceiver;
 import catering.businesslogic.kitchen.SummarySheet;
 import catering.businesslogic.kitchen.KitchenTask;
-
 public class KitchenTaskPersistence implements KitchenTaskEventReceiver {
 
     @Override

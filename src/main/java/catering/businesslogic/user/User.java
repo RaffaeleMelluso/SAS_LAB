@@ -12,7 +12,7 @@ import java.util.Set;
 public class User {
 
     public static enum Role {
-        CUOCO, CHEF, ORGANIZZATORE, SERVIZIO
+        CUOCO, CHEF, ORGANIZZATORE, SERVIZIO, PROPRIETARIO
     };
 
     private int id;

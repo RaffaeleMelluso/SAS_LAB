@@ -34,6 +34,16 @@ DROP TABLE IF EXISTS `Roles`;
 
 DROP TABLE IF EXISTS `Users`;
 
+DROP TABLE IF EXISTS `Teams`;
+
+DROP TABLE IF EXISTS `Employees`;
+
+DROP TABLE IF EXISTS `Contracts`;
+
+DROP TABLE IF EXISTS `Vacations`;
+
+
+
 -- 2) CREATE ALL TABLES (in dependency order)
 -- Start with tables that don't depend on others
 CREATE TABLE
@@ -184,6 +194,45 @@ CREATE TABLE
         FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`),
         FOREIGN KEY (`cook_id`) REFERENCES `Users` (`id`),
         FOREIGN KEY (`shift_id`) REFERENCES `Shifts` (`id`)
+    );
+
+CREATE TABLE
+    `Vacations` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `employee_id` INTEGER NOT NULL,
+        `start_date` DATE NOT NULL,
+        `end_date` DATE NOT NULL,
+        `state` TEXT DEFAULT 'Non valutata',
+        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`)
+    );
+
+CREATE TABLE
+    `Contracts` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `employee_id` INTEGER NOT NULL,
+        `start_date` DATE NOT NULL,
+        `end_date` DATE NOT NULL,
+        `engagement` TEXT NOT NULL DEFAULT '',
+        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`)
+    );
+
+
+CREATE TABLE
+    `Teams` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `name` TEXT NOT NULL DEFAULT '',
+        `staffToAssign` INTEGER DEFAULT 0
+
+    );
+
+CREATE TABLE
+    `Employees` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `name` TEXT DEFAULT '',
+        `fiscalCode` TEXT DEFAULT '',
+        `email` TEXT DEFAULT '',
+        `phoneNumber` TEXT DEFAULT '',
+        `vacationDaysLeft` INTEGER NOT NULL DEFAULT 0
     );
 
 -- Clean up existing data
