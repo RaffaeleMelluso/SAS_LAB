@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="catering.businesslogic.kitchen.staffManagementTest" time="1.959" tests="11" errors="0" skipped="0" failures="11">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="catering.businesslogic.kitchen.staffManagementTest" time="1.268" tests="11" errors="0" skipped="0" failures="11">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
@@ -14,7 +14,7 @@
     <property name="os.name" value="Linux"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/SAS_LAB/target/surefire/surefirebooter13500568104701955854.jar /SAS_LAB/target/surefire 2025-06-07T19-01-38_872-jvmRun1 surefire3669341727805616461tmp surefire_012908951736849557527tmp"/>
+    <property name="sun.java.command" value="/SAS_LAB/target/surefire/surefirebooter15093234386664212346.jar /SAS_LAB/target/surefire 2025-06-07T19-27-56_506-jvmRun1 surefire7843279195890286679tmp surefire_02363829628035516440tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/SAS_LAB/target/test-classes:/SAS_LAB/target/classes:/home/raffaele/.m2/repository/org/xerial/sqlite-jdbc/3.49.1.0/sqlite-jdbc-3.49.1.0.jar:/home/raffaele/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar:/home/raffaele/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/raffaele/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/raffaele/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.jar:/home/raffaele/.m2/repository/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar:/home/raffaele/.m2/repository/org/junit/platform/junit-platform-launcher/1.9.2/junit-platform-launcher-1.9.2.jar:/home/raffaele/.m2/repository/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/SAS_LAB/target/surefire/surefirebooter13500568104701955854.jar"/>
+    <property name="surefire.real.class.path" value="/SAS_LAB/target/surefire/surefirebooter15093234386664212346.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.26+4-post-Ubuntu-1ubuntu122.04"/>
     <property name="user.name" value="raffaele"/>
@@ -56,12 +56,13 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="testOwnerCreatesStaffList" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
+  <testcase name="testOwnerCreatesStaffList" classname="catering.businesslogic.kitchen.staffManagementTest" time="0.001">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
-    <system-err><![CDATA[2025-06-07 19:01:43.805 [SEVERE] catering.persistence.PersistenceManager: Error executing SQL from file: database/catering_init_sqlite.sql
-org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table `StaffLists` already exists)
+    <system-err><![CDATA[2025-06-07 19:27:58.636 [INFO] catering.businesslogic.kitchen.staffManagementTest: Database file deleted for clean test environment
+2025-06-07 19:27:59.885 [SEVERE] catering.persistence.PersistenceManager: Error executing SQL from file: database/catering_init_sqlite.sql
+org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (near "Dario": syntax error)
 	at org.sqlite.core.DB.newSQLException(DB.java:1179)
 	at org.sqlite.core.DB.newSQLException(DB.java:1190)
 	at org.sqlite.core.DB.throwex(DB.java:1150)
@@ -72,7 +73,7 @@ org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table 
 	at org.sqlite.jdbc3.JDBC3Statement.executeLargeUpdate(JDBC3Statement.java:126)
 	at org.sqlite.jdbc3.JDBC3Statement.executeUpdate(JDBC3Statement.java:113)
 	at catering.persistence.PersistenceManager.initializeDatabase(PersistenceManager.java:81)
-	at catering.businesslogic.kitchen.staffManagementTest.init(staffManagementTest.java:47)
+	at catering.businesslogic.kitchen.staffManagementTest.init(staffManagementTest.java:48)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -138,52 +139,52 @@ org.sqlite.SQLiteException: [SQLITE_ERROR] SQL error or missing database (table 
   </testcase>
   <testcase name="testOwnerCreatesContracts" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
   <testcase name="testOwnerModifiesContractEngagement" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
   <testcase name="testOwnerManagesEmployeesInStaffList" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
   <testcase name="testOwnerEvaluatesVacationRequests" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
   <testcase name="testOwnerCreatesTeamAndAssignsPermanentEmployee" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
   <testcase name="testOrganizerAssignsOccasionalEmployeeToTeam" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
   <testcase name="testOrganizerCannotCreateStaffList" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
   <testcase name="testOrganizerCannotCreateContracts" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
   <testcase name="testOrganizerCannotEvaluateVacations" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
   <testcase name="testOwnerDeletesContract" classname="catering.businesslogic.kitchen.staffManagementTest" time="0">
     <failure message="User should have owner role ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 ]]></failure>
   </testcase>
 </testsuite>

@@ -1,48 +1,48 @@
 -------------------------------------------------------------------------------
 Test set: catering.businesslogic.kitchen.staffManagementTest
 -------------------------------------------------------------------------------
-Tests run: 11, Failures: 11, Errors: 0, Skipped: 0, Time elapsed: 1.959 s <<< FAILURE! - in catering.businesslogic.kitchen.staffManagementTest
-testOwnerCreatesStaffList  Time elapsed: 0 s  <<< FAILURE!
+Tests run: 11, Failures: 11, Errors: 0, Skipped: 0, Time elapsed: 1.268 s <<< FAILURE! - in catering.businesslogic.kitchen.staffManagementTest
+testOwnerCreatesStaffList  Time elapsed: 0.001 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOwnerCreatesContracts  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOwnerModifiesContractEngagement  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOwnerManagesEmployeesInStaffList  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOwnerEvaluatesVacationRequests  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOwnerCreatesTeamAndAssignsPermanentEmployee  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOrganizerAssignsOccasionalEmployeeToTeam  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOrganizerCannotCreateStaffList  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOrganizerCannotCreateContracts  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOrganizerCannotEvaluateVacations  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 
 testOwnerDeletesContract  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: User should have owner role ==> expected: <true> but was: <false>
-	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:57)
+	at catering.businesslogic.kitchen.staffManagementTest.setup(staffManagementTest.java:68)
 

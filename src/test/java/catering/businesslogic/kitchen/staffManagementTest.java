@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import java.io.File;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,6 +47,16 @@ public class staffManagementTest {
     static void init() {
         PersistenceManager.initializeDatabase("database/catering_init_sqlite.sql");
         app = CatERing.getInstance();
+    }
+
+    @BeforeAll
+    static void cleanDatabase() {
+        // Elimina il file database per garantire un ambiente pulito
+        File dbFile = new File("database/catering.db");
+        if (dbFile.exists()) {
+            dbFile.delete();
+            LOGGER.info("Database file deleted for clean test environment");
+        }
     }
 
     @BeforeEach

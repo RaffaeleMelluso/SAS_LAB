@@ -1,260 +1,261 @@
 -- database: catering.db
 -- 1) FIRST REMOVE ALL TABLES (in reverse dependency order)
-DROP TABLE IF EXISTS `Assignment`;
+DROP TABLE IF EXISTS Assignment;
 
-DROP TABLE IF EXISTS `Tasks`;
+DROP TABLE IF EXISTS Tasks;
 
-DROP TABLE IF EXISTS `SummarySheets`;
+DROP TABLE IF EXISTS SummarySheets;
 
-DROP TABLE IF EXISTS `ShiftBookings`;
+DROP TABLE IF EXISTS ShiftBookings;
 
-DROP TABLE IF EXISTS `Shifts`;
+DROP TABLE IF EXISTS Shifts;
 
-DROP TABLE IF EXISTS `RecipePreparations`;
+DROP TABLE IF EXISTS RecipePreparations;
 
-DROP TABLE IF EXISTS `UserRoles`;
+DROP TABLE IF EXISTS UserRoles;
 
-DROP TABLE IF EXISTS `Services`;
+DROP TABLE IF EXISTS Services;
 
-DROP TABLE IF EXISTS `MenuItems`;
+DROP TABLE IF EXISTS MenuItems;
 
-DROP TABLE IF EXISTS `MenuFeatures`;
+DROP TABLE IF EXISTS MenuFeatures;
 
-DROP TABLE IF EXISTS `MenuSections`;
+DROP TABLE IF EXISTS MenuSections;
 
-DROP TABLE IF EXISTS `Menus`;
+DROP TABLE IF EXISTS Menus;
 
-DROP TABLE IF EXISTS `Events`;
+DROP TABLE IF EXISTS Events;
 
-DROP TABLE IF EXISTS `Preparations`;
+DROP TABLE IF EXISTS Preparations;
 
-DROP TABLE IF EXISTS `Recipes`;
+DROP TABLE IF EXISTS Recipes;
 
-DROP TABLE IF EXISTS `Roles`;
+DROP TABLE IF EXISTS Roles;
 
-DROP TABLE IF EXISTS `Users`;
+DROP TABLE IF EXISTS Users;
 
-DROP TABLE IF EXISTS `Teams`;
+DROP TABLE IF EXISTS Teams;
 
-DROP TABLE IF EXISTS `Employees`;
+DROP TABLE IF EXISTS Employees;
 
-DROP TABLE IF EXISTS `Contracts`;
+DROP TABLE IF EXISTS Contracts;
 
-DROP TABLE IF EXISTS `Vacations`;
+DROP TABLE IF EXISTS Vacations;
 
-DROP TABLE IF EXISTS `StaffLists`;
-DROP TABLE IF EXISTS `StaffAssociations`;
+DROP TABLE IF EXISTS StaffLists;
+DROP TABLE IF EXISTS StaffAssociations;
 
 
 
 -- 2) CREATE ALL TABLES (in dependency order)
 -- Start with tables that don't depend on others
 CREATE TABLE
-    `Users` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `username` TEXT NOT NULL DEFAULT ''
+    Users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL DEFAULT ''
     );
 
 CREATE TABLE
-    `Roles` (
-        `id` INTEGER NOT NULL,
-        `role` TEXT NOT NULL,
-        PRIMARY KEY (`id`)
+    Roles (
+        id INTEGER NOT NULL,
+        role TEXT NOT NULL,
+        PRIMARY KEY (id)
     );
 
 CREATE TABLE
-    `Recipes` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `name` TEXT,
-        `description` TEXT DEFAULT ''
+    Recipes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        description TEXT DEFAULT ''
     );
 
 CREATE TABLE
-    `Preparations` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `name` TEXT,
-        `description` TEXT DEFAULT ''
+    Preparations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        description TEXT DEFAULT ''
     );
 
 -- Tables with simple dependencies
 CREATE TABLE
-    `Events` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `name` TEXT,
-        `date_start` DATE,
-        `date_end` DATE,
-        `chef_id` INTEGER NOT NULL
+    Events (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        date_start DATE,
+        date_end DATE,
+        chef_id INTEGER NOT NULL
     );
 
 CREATE TABLE
-    `Menus` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `title` TEXT,
-        `owner_id` INTEGER,
-        `published` INTEGER DEFAULT 0
+    Menus (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT,
+        owner_id INTEGER,
+        published INTEGER DEFAULT 0
     );
 
 CREATE TABLE
-    `MenuSections` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `menu_id` INTEGER NOT NULL,
-        `name` TEXT,
-        `position` INTEGER
+    MenuSections (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        menu_id INTEGER NOT NULL,
+        name TEXT,
+        position INTEGER
     );
 
 CREATE TABLE
-    `UserRoles` (
-        `user_id` INTEGER NOT NULL,
-        `role_id` INT NOT NULL DEFAULT 0
+    UserRoles (
+        user_id INTEGER NOT NULL,
+        role_id INT NOT NULL DEFAULT 0
     );
 
 CREATE TABLE
-    `RecipePreparations` (
-        `recipe_id` INTEGER,
-        `preparation_id` INTEGER,
-        PRIMARY KEY (`recipe_id`, `preparation_id`),
-        FOREIGN KEY (`recipe_id`) REFERENCES `Recipes` (`id`),
-        FOREIGN KEY (`preparation_id`) REFERENCES `Preparations` (`id`)
+    RecipePreparations (
+        recipe_id INTEGER,
+        preparation_id INTEGER,
+        PRIMARY KEY (recipe_id, preparation_id),
+        FOREIGN KEY (recipe_id) REFERENCES Recipes (id),
+        FOREIGN KEY (preparation_id) REFERENCES Preparations (id)
     );
 
 CREATE TABLE
-    `MenuFeatures` (
-        `menu_id` INTEGER NOT NULL,
-        `name` TEXT NOT NULL DEFAULT '',
-        `value` INTEGER DEFAULT 0
+    MenuFeatures (
+        menu_id INTEGER NOT NULL,
+        name TEXT NOT NULL DEFAULT '',
+        value INTEGER DEFAULT 0
     );
 
 CREATE TABLE
-    `MenuItems` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `menu_id` INTEGER NOT NULL,
-        `section_id` INTEGER,
-        `description` TEXT,
-        `recipe_id` INTEGER NOT NULL,
-        `position` INTEGER
+    MenuItems (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        menu_id INTEGER NOT NULL,
+        section_id INTEGER,
+        description TEXT,
+        recipe_id INTEGER NOT NULL,
+        position INTEGER
     );
 
 CREATE TABLE
-    `Services` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `event_id` INTEGER NOT NULL,
-        `name` TEXT,
-        `approved_menu_id` INTEGER DEFAULT 0,
-        `service_date` DATE,
-        `time_start` TIME,
-        `time_end` TIME,
-        `location` TEXT
+    Services (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        event_id INTEGER NOT NULL,
+        name TEXT,
+        approved_menu_id INTEGER DEFAULT 0,
+        service_date DATE,
+        time_start TIME,
+        time_end TIME,
+        location TEXT
     );
 
 CREATE TABLE
-    `Shifts` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `date` DATE NOT NULL,
-        `start_time` TIME NOT NULL,
-        `end_time` TIME NOT NULL
+    Shifts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date DATE NOT NULL,
+        start_time TIME NOT NULL,
+        end_time TIME NOT NULL
     );
 
 CREATE TABLE
-    `ShiftBookings` (
-        `shift_id` INTEGER NOT NULL,
-        `user_id` INTEGER NOT NULL,
-        PRIMARY KEY (`shift_id`, `user_id`)
+    ShiftBookings (
+        shift_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        PRIMARY KEY (shift_id, user_id)
     );
 
 CREATE TABLE
-    `SummarySheets` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `service_id` INTEGER NOT NULL,
-        `owner_id` INTEGER NOT NULL,
-        FOREIGN KEY (`service_id`) REFERENCES `Services` (`id`),
-        FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`)
-    );
-
-CREATE TABLE
-    `Tasks` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `sumsheet_id` INTEGER NOT NULL,
-        `kitchenproc_id` INTEGER NOT NULL,
-        `preparation_id` INTEGER DEFAULT NULL,
-        `description` TEXT,
-        `type` INTEGER NOT NULL DEFAULT 1,
-        `quantity` REAL DEFAULT NULL,
-        `position` INTEGER NOT NULL DEFAULT 0,
-        `portions` INTEGER DEFAULT NULL,
-        `ready` INTEGER DEFAULT 0,
-        FOREIGN KEY (`sumsheet_id`) REFERENCES `SummarySheets` (`id`),
-        FOREIGN KEY (`kitchenproc_id`) REFERENCES `Recipes` (`id`)
-    );
-
-CREATE TABLE
-    `Assignment` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `sumsheet_id` INTEGER NOT NULL,
-        `task_id` INTEGER NOT NULL,
-        `cook_id` INTEGER NOT NULL,
-        `shift_id` INTEGER NOT NULL,
-        FOREIGN KEY (`sumsheet_id`) REFERENCES `SummarySheets` (`id`),
-        FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`),
-        FOREIGN KEY (`cook_id`) REFERENCES `Users` (`id`),
-        FOREIGN KEY (`shift_id`) REFERENCES `Shifts` (`id`)
-    );
-
-CREATE TABLE
-    `Vacations` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `employee_id` INTEGER NOT NULL,
-        `start_date` DATE NOT NULL,
-        `end_date` DATE NOT NULL,
-        `state` TEXT DEFAULT 'Non valutata',
-        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`)
-    );
-
-CREATE TABLE
-    `Contracts` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `employee_id` INTEGER NOT NULL,
-        `start_date` DATE NOT NULL,
-        `end_date` DATE NOT NULL,
-        `engagement` TEXT NOT NULL DEFAULT '',
-        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`)
+    SummarySheets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        service_id INTEGER NOT NULL,
+        owner_id INTEGER NOT NULL,
+        FOREIGN KEY (service_id) REFERENCES Services (id),
+        FOREIGN KEY (owner_id) REFERENCES Users (id)
     );
 
 
 CREATE TABLE
-    `Teams` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `name` TEXT NOT NULL DEFAULT '',
-        `staffToAssign` INTEGER DEFAULT 0
+    Tasks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sumsheet_id INTEGER NOT NULL,
+        kitchenproc_id INTEGER NOT NULL,
+        preparation_id INTEGER DEFAULT NULL,
+        description TEXT,
+        type INTEGER NOT NULL DEFAULT 1,
+        quantity REAL DEFAULT NULL,
+        position INTEGER NOT NULL DEFAULT 0,
+        portions INTEGER DEFAULT NULL,
+        ready INTEGER DEFAULT 0,
+        FOREIGN KEY (sumsheet_id) REFERENCES SummarySheets (id),
+        FOREIGN KEY (kitchenproc_id) REFERENCES Recipes (id)
+    );
+
+CREATE TABLE
+    Assignment (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sumsheet_id INTEGER NOT NULL,
+        task_id INTEGER NOT NULL,
+        cook_id INTEGER NOT NULL,
+        shift_id INTEGER NOT NULL,
+        FOREIGN KEY (sumsheet_id) REFERENCES SummarySheets (id),
+        FOREIGN KEY (task_id) REFERENCES Tasks (id),
+        FOREIGN KEY (cook_id) REFERENCES Users (id),
+        FOREIGN KEY (shift_id) REFERENCES Shifts (id)
+    );
+
+CREATE TABLE
+    Vacations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        employee_id INTEGER NOT NULL,
+        start_date DATE NOT NULL,
+        end_date DATE NOT NULL,
+        state TEXT DEFAULT 'Non valutata',
+        FOREIGN KEY (employee_id) REFERENCES Employees (id)
+    );
+
+CREATE TABLE
+    Contracts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        employee_id INTEGER NOT NULL,
+        start_date DATE NOT NULL,
+        end_date DATE NOT NULL,
+        engagement TEXT NOT NULL DEFAULT '',
+        FOREIGN KEY (employee_id) REFERENCES Employees (id)
+    );
+
+
+CREATE TABLE
+    Teams (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL DEFAULT '',
+        staffToAssign INTEGER DEFAULT 0
 
     );
 
 CREATE TABLE
-    `Employees` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `name` TEXT DEFAULT '',
-        `fiscalCode` TEXT DEFAULT '',
-        `email` TEXT DEFAULT '',
-        `phoneNumber` TEXT DEFAULT '',
-        `vacationDaysLeft` INTEGER NOT NULL DEFAULT 0
+    Employees (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT DEFAULT '',
+        fiscalCode TEXT DEFAULT '',
+        email TEXT DEFAULT '',
+        phoneNumber TEXT DEFAULT '',
+        vacationDaysLeft INTEGER NOT NULL DEFAULT 0
     );
 
 CREATE TABLE
-    `StaffLists` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `owner_id` INTEGER NOT NULL,
-        `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
-        FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`)
+    StaffLists (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        owner_id INTEGER NOT NULL,
+        created_date INTEGER DEFAULT (strftime('%s', 'now')),
+        FOREIGN KEY (owner_id) REFERENCES Users (id)
     );
 
 CREATE TABLE
-    `StaffAssociations` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `staff_list_id` INTEGER NOT NULL,
-        `employee_id` INTEGER NOT NULL,
-        `engagement_type` TEXT NOT NULL CHECK (engagement_type IN ('permanente', 'occasionale')),
-        FOREIGN KEY (`staff_list_id`) REFERENCES `StaffLists` (`id`) ON DELETE CASCADE,
-        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE,
-        UNIQUE (`staff_list_id`, `employee_id`)
+    StaffAssociations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        staff_list_id INTEGER NOT NULL,
+        employee_id INTEGER NOT NULL,
+        engagement_type TEXT NOT NULL CHECK (engagement_type IN ('permanente', 'occasionale')),
+        FOREIGN KEY (staff_list_id) REFERENCES StaffLists (id) ON DELETE CASCADE,
+        FOREIGN KEY (employee_id) REFERENCES Employees (id) ON DELETE CASCADE,
+        UNIQUE (staff_list_id, employee_id)
     );
 
 -- Clean up existing data
@@ -436,7 +437,8 @@ VALUES -- ANTIPASTI
     (
         'Pesce al Forno con Patate',
         'Pesce al forno con patate, pomodorini ed erbe aromatiche'
-    ),
+
+),
     (
         'Vitello Tonnato',
         'Fettine di vitello con salsa al tonno e capperi'
@@ -617,6 +619,7 @@ FROM
 WHERE
     r.name = 'Lasagne alla Bolognese'
     AND p.name = 'Besciamella';
+
 
 INSERT INTO
     RecipePreparations (recipe_id, preparation_id)
@@ -1029,6 +1032,7 @@ INSERT INTO UserRoles (user_id, role_id) VALUES
 (3, 0),    -- Luca is a cook
 (4, 0);    -- Sofia is a cook
 
+Dario Unito, [07/06/2025 19:25]
 -- Chefs (CHEF)
 INSERT INTO UserRoles (user_id, role_id) VALUES
 (5, 1),     -- Antonio is a chef
@@ -1128,144 +1132,134 @@ INSERT INTO Services (
 
 -- Aggiunta delle tabelle Staff dopo le tabelle esistenti
 CREATE TABLE
-    `StaffLists` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `owner_id` INTEGER NOT NULL,
-        `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
-        FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`)
+    StaffLists (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        owner_id INTEGER NOT NULL,
+        created_date INTEGER DEFAULT (strftime('%s', 'now')),
+        FOREIGN KEY (owner_id) REFERENCES Users (id)
     );
 
 CREATE TABLE
-    `StaffAssociations` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `staff_list_id` INTEGER NOT NULL,
-        `employee_id` INTEGER NOT NULL,
-        `engagement_type` TEXT NOT NULL CHECK (engagement_type IN ('permanente', 'occasionale')),
-        FOREIGN KEY (`staff_list_id`) REFERENCES `StaffLists` (`id`) ON DELETE CASCADE,
-        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE,
-        UNIQUE (`staff_list_id`, `employee_id`)
+    StaffAssociations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        staff_list_id INTEGER NOT NULL,
+        employee_id INTEGER NOT NULL,
+        engagement_type TEXT NOT NULL CHECK (engagement_type IN ('permanente', 'occasionale')),
+        FOREIGN KEY (staff_list_id) REFERENCES StaffLists (id) ON DELETE CASCADE,
+        FOREIGN KEY (employee_id) REFERENCES Employees (id) ON DELETE CASCADE,
+        UNIQUE (staff_list_id, employee_id)
     );
 
 -- Completare le tabelle esistenti che erano vuote
 -- Aggiornare la tabella Employees esistente
 CREATE TABLE IF NOT EXISTS
-    `Employees` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `name` TEXT NOT NULL,
-        `fiscal_code` TEXT UNIQUE,
-        `email` TEXT,
-        `phone_number` TEXT,
-        `vacation_days_left` INTEGER DEFAULT 30
+    Employees (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        fiscal_code TEXT UNIQUE,
+        email TEXT,
+        phone_number TEXT,
+        vacation_days_left INTEGER DEFAULT 30
     );
 
 -- Completare la tabella Contracts esistente
 CREATE TABLE IF NOT EXISTS
-    `Contracts` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `engagement` TEXT NOT NULL CHECK (engagement IN ('permanente', 'occasionale')),
-        `start_date` INTEGER NOT NULL,
-        `end_date` INTEGER,
-        `employee_id` INTEGER NOT NULL,
-        `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
-        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE
+    Contracts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        engagement TEXT NOT NULL CHECK (engagement IN ('permanente', 'occasionale')),
+        start_date INTEGER NOT NULL,
+        end_date INTEGER,
+        employee_id INTEGER NOT NULL,
+        created_date INTEGER DEFAULT (strftime('%s', 'now')),
+        FOREIGN KEY (employee_id) REFERENCES Employees (id) ON DELETE CASCADE
     );
 
 -- Completare la tabella Vacations esistente
 CREATE TABLE IF NOT EXISTS
-    `Vacations` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `state` TEXT NOT NULL DEFAULT 'pending' CHECK (state IN ('pending', 'approved', 'rejected', 'cancelled')),
-        `start_date` INTEGER NOT NULL,
-        `end_date` INTEGER NOT NULL,
-        `employee_id` INTEGER NOT NULL,
-        `requested_date` INTEGER DEFAULT (strftime('%s', 'now')),
-        `evaluated_date` INTEGER,
-        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE
+    Vacations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        state TEXT NOT NULL DEFAULT 'pending' CHECK (state IN ('pending', 'approved', 'rejected', 'cancelled')),
+        start_date INTEGER NOT NULL,
+        end_date INTEGER NOT NULL,
+        employee_id INTEGER NOT NULL,
+        requested_date INTEGER DEFAULT (strftime('%s', 'now')),
+        evaluated_date INTEGER,
+        FOREIGN KEY (employee_id) REFERENCES Employees (id) ON DELETE CASCADE
     );
 
 -- Completare la tabella Teams esistente
 CREATE TABLE IF NOT EXISTS
-    `Teams` (
-        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-        `name` TEXT NOT NULL,
-        `staff_to_assign` INTEGER DEFAULT 0,
-        `created_date` INTEGER DEFAULT (strftime('%s', 'now'))
+    Teams (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        staff_to_assign INTEGER DEFAULT 0,
+        created_date INTEGER DEFAULT (strftime('%s', 'now'))
     );
 
 -- Aggiungere dati di esempio per Employees
-INSERT OR IGNORE INTO `Employees` (`name`, `fiscal_code`, `email`, `phone_number`, `vacation_days_left`) VALUES 
+INSERT OR IGNORE INTO Employees (name, fiscal_code, email, phone_number, vacation_days_left) VALUES 
     ('Goran Pandev', 'GRNPND80A01H501U', 'goran.pandev@catering.com', '+39 320 1234567', 25),
     ('Claudio Lupo', 'CLDLPO85B02H501V', 'claudio.lupo@catering.com', '+39 320 2345678', 30),
     ('Dario Mangini', 'DARMNG90C03H501W', 'dario.mangini@catering.com', '+39 320 3456789', 20),
     ('Raffaele Melluso', 'RFFMLL92D04H501X', 'raffaele.melluso@catering.com', '+39 320 4567890', 28);
 
 -- Completare le tabelle esistenti che erano vuote
-DROP TABLE IF EXISTS `StaffLists`;
-DROP TABLE IF EXISTS `StaffAssociations`;
+DROP TABLE IF EXISTS StaffLists;
+DROP TABLE IF EXISTS StaffAssociations;
 
 -- Tabelle Staff complete
-CREATE TABLE `StaffLists` (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `owner_id` INTEGER NOT NULL,
-    `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
-    FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`)
+CREATE TABLE StaffLists (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id INTEGER NOT NULL,
+    created_date INTEGER DEFAULT (strftime('%s', 'now')),
+    FOREIGN KEY (owner_id) REFERENCES Users (id)
 );
 
-CREATE TABLE `StaffAssociations` (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `staff_list_id` INTEGER NOT NULL,
-    `employee_id` INTEGER NOT NULL,
-    `engagement_type` TEXT NOT NULL CHECK (engagement_type IN ('permanente', 'occasionale')),
-    FOREIGN KEY (`staff_list_id`) REFERENCES `StaffLists` (`id`) ON DELETE CASCADE,
-    FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE,
-    UNIQUE (`staff_list_id`, `employee_id`)
+CREATE TABLE StaffAssociations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    staff_list_id INTEGER NOT NULL,
+    employee_id INTEGER NOT NULL,
+    engagement_type TEXT NOT NULL CHECK (engagement_type IN ('permanente', 'occasionale')),
+    FOREIGN KEY (staff_list_id) REFERENCES StaffLists (id) ON DELETE CASCADE,
+    FOREIGN KEY (employee_id) REFERENCES Employees (id) ON DELETE CASCADE,
+    UNIQUE (staff_list_id, employee_id)
 );
 
 -- Completare le altre tabelle vuote se necessario
-CREATE TABLE IF NOT EXISTS `Employees` (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `name` TEXT NOT NULL,
-    `fiscal_code` TEXT UNIQUE,
-    `email` TEXT,
-    `phone_number` TEXT,
-    `vacation_days_left` INTEGER DEFAULT 30
+CREATE TABLE IF NOT EXISTS Employees (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    fiscal_code TEXT UNIQUE,
+    email TEXT,
+    phone_number TEXT,
+    vacation_days_left INTEGER DEFAULT 30
 );
 
-CREATE TABLE IF NOT EXISTS `Contracts` (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `engagement` TEXT NOT NULL CHECK (engagement IN ('permanente', 'occasionale')),
-    `start_date` INTEGER NOT NULL,
-    `end_date` INTEGER,
-    `employee_id` INTEGER NOT NULL,
-    `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
-    FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS Contracts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    engagement TEXT NOT NULL CHECK (engagement IN ('permanente', 'occasionale')),
+    start_date INTEGER NOT NULL,
+    end_date INTEGER,
+    employee_id INTEGER NOT NULL,
+    created_date INTEGER DEFAULT (strftime('%s', 'now')),
+    FOREIGN KEY (employee_id) REFERENCES Employees (id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS `Vacations` (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `state` TEXT NOT NULL DEFAULT 'pending' CHECK (state IN ('pending', 'approved', 'rejected', 'cancelled')),
-    `start_date` INTEGER NOT NULL,
-    `end_date` INTEGER NOT NULL,
-    `employee_id` INTEGER NOT NULL,
-    `requested_date` INTEGER DEFAULT (strftime('%s', 'now')),
-    `evaluated_date` INTEGER,
-    FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE
+
+CREATE TABLE IF NOT EXISTS Vacations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    state TEXT NOT NULL DEFAULT 'pending' CHECK (state IN ('pending', 'approved', 'rejected', 'cancelled')),
+    start_date INTEGER NOT NULL,
+    end_date INTEGER NOT NULL,
+    employee_id INTEGER NOT NULL,
+    requested_date INTEGER DEFAULT (strftime('%s', 'now')),
+    evaluated_date INTEGER,
+    FOREIGN KEY (employee_id) REFERENCES Employees (id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS `Teams` (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `name` TEXT NOT NULL,
-    `staff_to_assign` INTEGER DEFAULT 0,
-    `created_date` INTEGER DEFAULT (strftime('%s', 'now'))
+CREATE TABLE IF NOT EXISTS Teams (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    staff_to_assign INTEGER DEFAULT 0,
+    created_date INTEGER DEFAULT (strftime('%s', 'now'))
 );
-
--- Add sample users with new roles
-INSERT OR IGNORE INTO Users (username) VALUES ('Mario Rossi');
-INSERT OR IGNORE INTO Users (username) VALUES ('Luigi Verdi');
-
--- Add roles for the new users
-INSERT OR IGNORE INTO UserRoles (user_id, role_id) 
-SELECT u.id, 'PROPRIETARIO' FROM Users u WHERE u.username = 'Mario Rossi';
-
-INSERT OR IGNORE INTO UserRoles (user_id, role_id) 
-SELECT u.id, 'ORGANIZZATORE' FROM Users u WHERE u.username = 'Luigi Verdi';
