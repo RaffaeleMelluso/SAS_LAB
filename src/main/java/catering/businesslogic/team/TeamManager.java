@@ -2,11 +2,14 @@ package catering.businesslogic.team;
 
 import catering.businesslogic.employee.Employee;
 import catering.util.LogManager;
+import catering.businesslogic.staff.StaffList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import catering.businesslogic.CatERing;
+import catering.businesslogic.user.User;
 /**
  * TeamManager handles all operations related to teams in the CatERing system.
  * It manages team creation, modification, and employee assignments.
@@ -66,7 +69,7 @@ public class TeamManager {
     }
 
     /**
-     * Creates a new team with the given name and staff to assign.
+     * Creates a new team. Only owners can create teams.
      * 
      * @param name          The team name
      * @param staffToAssign Number of staff to assign
@@ -74,6 +77,10 @@ public class TeamManager {
      * @throws TeamException if creation fails
      */
     public Team createTeam(String name, int staffToAssign) throws TeamException {
+        User currentUser = CatERing.getInstance().getUserManager().getCurrentUser();
+        if (!currentUser.isOwner()) {
+            throw new TeamException("Only owners can create teams");
+        }
         Team team = new Team(name, new HashMap<>(), staffToAssign);
         if (team.save()) {
             this.currentTeam = team;
@@ -113,6 +120,38 @@ public class TeamManager {
 
         notifyEmployeeAdded(currentTeam, employee, engagement);
         currentTeam.update(); // Persist change
+    }
+
+    /**
+     * Assigns permanent employee from staff list to team. Only owners can do this.
+     * 
+     * @param employee The employee to assign
+     * @param team     The team to assign the employee to
+     * @param staffList The staff list
+     * @throws TeamException if assignment fails
+     */
+    public void assignPermanentEmployeeFromStaffList(Employee employee, Team team, StaffList staffList) throws TeamException {
+        User currentUser = CatERing.getInstance().getUserManager().getCurrentUser();
+        if (!currentUser.isOwner()) {
+            throw new TeamException("Only owners can assign permanent employees to teams");
+        }
+        // implementation
+    }
+
+    /**
+     * Assigns occasional employee from staff list to team. Organizers and owners can do this.
+     * 
+     * @param employee The employee to assign
+     * @param team     The team to assign the employee to
+     * @param staffList The staff list
+     * @throws TeamException if assignment fails
+     */
+    public void assignOccasionalEmployeeFromStaffList(Employee employee, Team team, StaffList staffList) throws TeamException {
+        User currentUser = CatERing.getInstance().getUserManager().getCurrentUser();
+        if (!currentUser.isOrganizer() && !currentUser.isOwner()) {
+            throw new TeamException("Only organizers and owners can assign occasional employees to teams");
+        }
+        // implementation
     }
 
     // ===== Event notification methods =====

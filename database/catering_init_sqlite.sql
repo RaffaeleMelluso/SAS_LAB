@@ -1258,3 +1258,14 @@ CREATE TABLE IF NOT EXISTS `Teams` (
     `staff_to_assign` INTEGER DEFAULT 0,
     `created_date` INTEGER DEFAULT (strftime('%s', 'now'))
 );
+
+-- Add sample users with new roles
+INSERT OR IGNORE INTO Users (username) VALUES ('Mario Rossi');
+INSERT OR IGNORE INTO Users (username) VALUES ('Luigi Verdi');
+
+-- Add roles for the new users
+INSERT OR IGNORE INTO UserRoles (user_id, role_id) 
+SELECT u.id, 'PROPRIETARIO' FROM Users u WHERE u.username = 'Mario Rossi';
+
+INSERT OR IGNORE INTO UserRoles (user_id, role_id) 
+SELECT u.id, 'ORGANIZZATORE' FROM Users u WHERE u.username = 'Luigi Verdi';

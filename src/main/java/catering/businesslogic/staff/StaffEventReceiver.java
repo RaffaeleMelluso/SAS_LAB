@@ -16,4 +16,12 @@ public interface StaffEventReceiver {
     void updateEvaluateVacationRequest(Vacation vacation);
     
     void updateEmployeeDataModified(Employee employee);
+    
+    void updateContractCreated(Contract contract);
+    
+    void updateContractEngagementChanged(Contract contract);
+    
+    void updateEmployeeRemovedFromStaffList(Employee employee, StaffList staffList);
+    
+    void updateOccasionalEmployeeAssignedToTeam(Employee employee, Team team);
 }

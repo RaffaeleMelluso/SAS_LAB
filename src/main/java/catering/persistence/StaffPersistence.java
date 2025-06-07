@@ -48,11 +48,29 @@ public class StaffPersistence implements StaffEventReceiver {
     @Override
     public void updateContractDeleted(Contract contract) {
         LOGGER.info("Persisting contract deletion: " + contract.getContractId());
-        try {
-            contract.deleteContract();
-        } catch (StaffException e) {
-            LOGGER.severe("Failed to persist contract deletion: " + e.getMessage());
-        }
+        // Non serve chiamare deleteContract() qui perché è già stato fatto nel manager
+        // Questo metodo serve per operazioni aggiuntive di persistenza se necessarie
+    }
+
+    /**
+     * Handles persistence when a contract is created
+     * @param contract The contract that was created
+     */
+    @Override
+    public void updateContractCreated(Contract contract) {
+        LOGGER.info("Persisting contract creation: " + contract.getContractId());
+        // Il contract è già stato salvato nel manager, qui possiamo fare logging aggiuntivo
+        // o altre operazioni di persistenza se necessarie
+    }
+
+    /**
+     * Handles persistence when a contract's engagement is changed
+     * @param contract The contract whose engagement was changed
+     */
+    @Override
+    public void updateContractEngagementChanged(Contract contract) {
+        LOGGER.info("Persisting contract engagement change: " + contract.getContractId());
+        // Il contract è già stato aggiornato nel manager
     }
 
     /**
@@ -65,7 +83,6 @@ public class StaffPersistence implements StaffEventReceiver {
         LOGGER.info("Persisting permanent employee assignment: " + employee.getName() +
                    " to team " + team.getName());
         // La persistenza dell'assignment viene gestita dal TeamManager
-        // Qui possiamo aggiungere logging o altre operazioni se necessario
     }
 
     /**
@@ -81,11 +98,7 @@ public class StaffPersistence implements StaffEventReceiver {
     @Override
     public void updateEvaluateVacationRequest(Vacation vacation) {
         LOGGER.info("Persisting vacation request evaluation: " + vacation.getId());
-        try {
-            vacation.update(); // Salva lo stato attuale della vacation
-        } catch (StaffException e) {
-            LOGGER.severe("Failed to persist vacation request evaluation: " + e.getMessage());
-        }
+        // La vacation è già stata aggiornata nel manager
     }
 
     /**
@@ -100,5 +113,28 @@ public class StaffPersistence implements StaffEventReceiver {
         } catch (Exception e) {
             LOGGER.severe("Failed to persist employee data modification: " + e.getMessage());
         }
+    }
+
+    /**
+     * Handles persistence when an employee is removed from a staff list
+     * @param employee The employee that was removed
+     * @param staffList The staff list the employee was removed from
+     */
+    @Override
+    public void updateEmployeeRemovedFromStaffList(Employee employee, StaffList staffList) {
+        LOGGER.info("Persisting employee removal from staff list: " + employee.getName() + 
+                   " from list " + staffList.getId());
+        // La staffList è già stata aggiornata nel manager
+    }
+
+    /**
+     * Handles persistence when an occasional employee is assigned to a team
+     * @param employee The employee that was assigned
+     * @param team The team the employee was assigned to
+     */
+    @Override
+    public void updateOccasionalEmployeeAssignedToTeam(Employee employee, Team team) {
+        LOGGER.info("Persisting occasional employee assignment: " + employee.getName() + 
+                   " to team " + team.getName());
     }
 }

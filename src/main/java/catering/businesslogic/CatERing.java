@@ -12,6 +12,7 @@ import catering.businesslogic.employee.EmployeeManager;
 import catering.businesslogic.team.TeamManager;
 import catering.persistence.KitchenTaskPersistence;
 import catering.persistence.MenuPersistence;
+import catering.persistence.StaffPersistence;
 
 public class CatERing {
     private static CatERing singleInstance;
@@ -32,6 +33,7 @@ public class CatERing {
 
     private MenuPersistence menuPersistence;
     private KitchenTaskPersistence kitchenTaskPersistence;
+    private StaffPersistence staffPersistence;
 
     private StaffManager staffMgr;
     private TeamManager teamMgr;
@@ -51,10 +53,11 @@ public class CatERing {
 
         menuPersistence = new MenuPersistence();
         kitchenTaskPersistence = new KitchenTaskPersistence();
-
+        staffPersistence = new StaffPersistence();
 
         menuMgr.addEventReceiver(menuPersistence);
         kitchenTaskMgr.addEventReceiver(kitchenTaskPersistence);
+        staffMgr.addEventReceiver(staffPersistence);
     }
 
     public static void main(String[] args) {

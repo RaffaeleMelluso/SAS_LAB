@@ -3,6 +3,7 @@ package catering.businesslogic.staff;
 import java.util.Date;
 import java.util.logging.Logger;
 import catering.businesslogic.employee.Employee;
+import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 import catering.util.LogManager;
@@ -18,12 +19,14 @@ public class Contract {
     private Date startDate;
     private Date endDate;
     private Employee employee;
+    private User owner;
 
     public Contract() {
         LOGGER.fine("Created new empty Contract");
     }
 
-    public Contract(int contractId, String engagement, Date startDate, Date endDate, Employee employee) throws StaffException {
+    public Contract(String engagement, Date startDate, Date endDate, Employee employee) throws StaffException {
+        // Validation first
         if (engagement == null || engagement.trim().isEmpty()) {
             throw new StaffException("Engagement type cannot be null or empty");
         }
@@ -40,7 +43,8 @@ public class Contract {
             throw new StaffException("Employee cannot be null");
         }
         
-        this.contractId = contractId;
+        // Set fields after validation
+        this.contractId = 0; // Will be set by database auto-increment
         this.engagement = engagement.trim();
         this.startDate = startDate;
         this.endDate = endDate;
@@ -57,21 +61,30 @@ public class Contract {
     // Metodi di persistenza
     public void saveContract() throws StaffException {
         if (employee == null) {
-            throw new StaffException("Cannot save contract without employee");
+            throw new StaffException("Employee cannot be null");
+        }
+        
+        if (contractId != 0) {
+            // Contract already exists, update instead
+            updateContract();
+            return;
         }
         
         try {
             String query = "INSERT INTO Contracts (engagement, start_date, end_date, employee_id) VALUES (?, ?, ?, ?)";
-            Long startTimestamp = (startDate != null) ? startDate.getTime() : null;
-            Long endTimestamp = (endDate != null) ? endDate.getTime() : null;
-            int employeeId = employee.getId();
+            PersistenceManager.executeUpdate(query, 
+                engagement, 
+                startDate.getTime(), 
+                endDate != null ? endDate.getTime() : null, 
+                employee.getId());
             
-            PersistenceManager.executeUpdate(query, engagement, startTimestamp, endTimestamp, employeeId);
+            // Get the auto-generated ID
             this.contractId = PersistenceManager.getLastId();
-            LOGGER.info("Successfully saved contract with ID: " + this.contractId);
+            
+            LOGGER.info("Saved contract with auto-generated ID: " + contractId);
         } catch (Exception e) {
             LOGGER.severe("Failed to save contract: " + e.getMessage());
-            throw new StaffException("Failed to save contract", e);
+            throw new StaffException("Failed to save contract: " + e.getMessage(), e);
         }
     }
 
@@ -280,6 +293,18 @@ public class Contract {
             throw new StaffException("Employee cannot be null");
         }
         this.employee = employee;
+    }
+
+    /**
+     * Changes engagement from occasional to permanent
+     */
+    public void changeEngagementToPermanent() throws StaffException {
+        if (!"occasionale".equals(this.engagement)) {
+            throw new StaffException("Contract is not occasional, cannot change to permanent");
+        }
+        this.engagement = "permanente";
+        updateContract();
+        LOGGER.info("Changed contract engagement to permanent for employee: " + employee.getName());
     }
 
     @Override

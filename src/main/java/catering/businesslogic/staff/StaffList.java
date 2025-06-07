@@ -126,7 +126,21 @@ public class StaffList {
         return engagementType;
     }
 
-    
+    /**
+     * Gets the name of this staff list.
+     * @return The name of the staff list
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the name of this staff list.
+     * @param name The name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
      * Saves this staff list to the database, including its members.
