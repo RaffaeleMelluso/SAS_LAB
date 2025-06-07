@@ -121,4 +121,16 @@ public class CatERing {
         this.kitchenTaskMgr = kitchenTaskMgr;
     }
 
+    public StaffManager getStaffManager() {
+        return staffMgr;
+    }
+
+    public TeamManager getTeamManager() {
+        return teamMgr;
+    }
+
+    public EmployeeManager getEmployeeMgr() {
+        return employeeMgr;
+    }
+
 }

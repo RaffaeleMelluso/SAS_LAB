@@ -42,6 +42,9 @@ DROP TABLE IF EXISTS `Contracts`;
 
 DROP TABLE IF EXISTS `Vacations`;
 
+DROP TABLE IF EXISTS `StaffLists`;
+DROP TABLE IF EXISTS `StaffAssociations`;
+
 
 
 -- 2) CREATE ALL TABLES (in dependency order)
@@ -233,6 +236,25 @@ CREATE TABLE
         `email` TEXT DEFAULT '',
         `phoneNumber` TEXT DEFAULT '',
         `vacationDaysLeft` INTEGER NOT NULL DEFAULT 0
+    );
+
+CREATE TABLE
+    `StaffLists` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `owner_id` INTEGER NOT NULL,
+        `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
+        FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`)
+    );
+
+CREATE TABLE
+    `StaffAssociations` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `staff_list_id` INTEGER NOT NULL,
+        `employee_id` INTEGER NOT NULL,
+        `engagement_type` TEXT NOT NULL CHECK (engagement_type IN ('permanente', 'occasionale')),
+        FOREIGN KEY (`staff_list_id`) REFERENCES `StaffLists` (`id`) ON DELETE CASCADE,
+        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE,
+        UNIQUE (`staff_list_id`, `employee_id`)
     );
 
 -- Clean up existing data
@@ -1102,4 +1124,137 @@ INSERT INTO Services (
     time('19:00'),              -- Start time
     time('23:00'),              -- End time
     'Sala Esecutiva'            -- Location in Italian
+);
+
+-- Aggiunta delle tabelle Staff dopo le tabelle esistenti
+CREATE TABLE
+    `StaffLists` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `owner_id` INTEGER NOT NULL,
+        `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
+        FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`)
+    );
+
+CREATE TABLE
+    `StaffAssociations` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `staff_list_id` INTEGER NOT NULL,
+        `employee_id` INTEGER NOT NULL,
+        `engagement_type` TEXT NOT NULL CHECK (engagement_type IN ('permanente', 'occasionale')),
+        FOREIGN KEY (`staff_list_id`) REFERENCES `StaffLists` (`id`) ON DELETE CASCADE,
+        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE,
+        UNIQUE (`staff_list_id`, `employee_id`)
+    );
+
+-- Completare le tabelle esistenti che erano vuote
+-- Aggiornare la tabella Employees esistente
+CREATE TABLE IF NOT EXISTS
+    `Employees` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `name` TEXT NOT NULL,
+        `fiscal_code` TEXT UNIQUE,
+        `email` TEXT,
+        `phone_number` TEXT,
+        `vacation_days_left` INTEGER DEFAULT 30
+    );
+
+-- Completare la tabella Contracts esistente
+CREATE TABLE IF NOT EXISTS
+    `Contracts` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `engagement` TEXT NOT NULL CHECK (engagement IN ('permanente', 'occasionale')),
+        `start_date` INTEGER NOT NULL,
+        `end_date` INTEGER,
+        `employee_id` INTEGER NOT NULL,
+        `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
+        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE
+    );
+
+-- Completare la tabella Vacations esistente
+CREATE TABLE IF NOT EXISTS
+    `Vacations` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `state` TEXT NOT NULL DEFAULT 'pending' CHECK (state IN ('pending', 'approved', 'rejected', 'cancelled')),
+        `start_date` INTEGER NOT NULL,
+        `end_date` INTEGER NOT NULL,
+        `employee_id` INTEGER NOT NULL,
+        `requested_date` INTEGER DEFAULT (strftime('%s', 'now')),
+        `evaluated_date` INTEGER,
+        FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE
+    );
+
+-- Completare la tabella Teams esistente
+CREATE TABLE IF NOT EXISTS
+    `Teams` (
+        `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `name` TEXT NOT NULL,
+        `staff_to_assign` INTEGER DEFAULT 0,
+        `created_date` INTEGER DEFAULT (strftime('%s', 'now'))
+    );
+
+-- Aggiungere dati di esempio per Employees
+INSERT OR IGNORE INTO `Employees` (`name`, `fiscal_code`, `email`, `phone_number`, `vacation_days_left`) VALUES 
+    ('Goran Pandev', 'GRNPND80A01H501U', 'goran.pandev@catering.com', '+39 320 1234567', 25),
+    ('Claudio Lupo', 'CLDLPO85B02H501V', 'claudio.lupo@catering.com', '+39 320 2345678', 30),
+    ('Dario Mangini', 'DARMNG90C03H501W', 'dario.mangini@catering.com', '+39 320 3456789', 20),
+    ('Raffaele Melluso', 'RFFMLL92D04H501X', 'raffaele.melluso@catering.com', '+39 320 4567890', 28);
+
+-- Completare le tabelle esistenti che erano vuote
+DROP TABLE IF EXISTS `StaffLists`;
+DROP TABLE IF EXISTS `StaffAssociations`;
+
+-- Tabelle Staff complete
+CREATE TABLE `StaffLists` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `owner_id` INTEGER NOT NULL,
+    `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
+    FOREIGN KEY (`owner_id`) REFERENCES `Users` (`id`)
+);
+
+CREATE TABLE `StaffAssociations` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `staff_list_id` INTEGER NOT NULL,
+    `employee_id` INTEGER NOT NULL,
+    `engagement_type` TEXT NOT NULL CHECK (engagement_type IN ('permanente', 'occasionale')),
+    FOREIGN KEY (`staff_list_id`) REFERENCES `StaffLists` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE,
+    UNIQUE (`staff_list_id`, `employee_id`)
+);
+
+-- Completare le altre tabelle vuote se necessario
+CREATE TABLE IF NOT EXISTS `Employees` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `name` TEXT NOT NULL,
+    `fiscal_code` TEXT UNIQUE,
+    `email` TEXT,
+    `phone_number` TEXT,
+    `vacation_days_left` INTEGER DEFAULT 30
+);
+
+CREATE TABLE IF NOT EXISTS `Contracts` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `engagement` TEXT NOT NULL CHECK (engagement IN ('permanente', 'occasionale')),
+    `start_date` INTEGER NOT NULL,
+    `end_date` INTEGER,
+    `employee_id` INTEGER NOT NULL,
+    `created_date` INTEGER DEFAULT (strftime('%s', 'now')),
+    FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `Vacations` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `state` TEXT NOT NULL DEFAULT 'pending' CHECK (state IN ('pending', 'approved', 'rejected', 'cancelled')),
+    `start_date` INTEGER NOT NULL,
+    `end_date` INTEGER NOT NULL,
+    `employee_id` INTEGER NOT NULL,
+    `requested_date` INTEGER DEFAULT (strftime('%s', 'now')),
+    `evaluated_date` INTEGER,
+    FOREIGN KEY (`employee_id`) REFERENCES `Employees` (`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `Teams` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `name` TEXT NOT NULL,
+    `staff_to_assign` INTEGER DEFAULT 0,
+    `created_date` INTEGER DEFAULT (strftime('%s', 'now'))
 );

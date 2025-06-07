@@ -1,5 +1,19 @@
 package catering.businesslogic.staff;
 
-public class StaffEventReceiver {
-  
+import catering.businesslogic.employee.Employee;
+import catering.businesslogic.team.Team;
+
+public interface StaffEventReceiver {
+    
+    void updateStaffListAdded(StaffList staffList);
+    
+    void updateStaffListCreated(StaffList staffList);
+    
+    void updateContractDeleted(Contract contract);
+    
+    void updatePermanentEmployeeAdded(Employee employee, Team team);
+    
+    void updateEvaluateVacationRequest(Vacation vacation);
+    
+    void updateEmployeeDataModified(Employee employee);
 }
