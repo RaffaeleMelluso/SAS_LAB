@@ -69,28 +69,23 @@ public class EmployeeManager {
         }
     }
 
+
     /**
-     * Updates the number of vacation days left for the current employee,
+     * Updates the number of vacation days left for the given employee,
      * subtracting the days between start_date and end_date (inclusive).
-     * 
-     * @param start_date The start date of the vacation
-     * @param end_date   The end date of the vacation
      */
-    public void updateVacationDaysLeft(Date start_date, Date end_date) {
-        if (currentEmployee != null) {
-            int vacationDays = (int) ((end_date.getTime() - start_date.getTime()) / (1000 * 60 * 60 * 24) + 1);
-            int newDaysLeft = currentEmployee.getVacationDaysLeft() - vacationDays;
-            currentEmployee.setVacationDaysLeft(newDaysLeft);
-            if (currentEmployee.update()) {
-                LOGGER.info("Updated vacation days left for employee: " + currentEmployee.getName() +
-                        " (now: " + newDaysLeft + ")");
-            } else {
-                LOGGER.warning("Failed to update vacation days for employee: " + currentEmployee.getName());
-            }
-        } else {
-            LOGGER.warning("No current employee selected for vacation update.");
+    public static void updateVacationDaysLeft(Employee employee, java.util.Date startDate, java.util.Date endDate) {
+        if (employee != null && startDate != null && endDate != null) {
+            int vacationDays = (int) ((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24) + 1);
+            int newDaysLeft = employee.getVacationDaysLeft() - vacationDays;
+            employee.setVacationDaysLeft(newDaysLeft);
+            employee.update();
+            Logger.getLogger(EmployeeManager.class.getName()).info(
+                "Updated vacation days left for employee: " + employee.getName() +
+                " (now: " + newDaysLeft + ")");
         }
     }
+
 
     /**
      * Loads an employee by ID and sets it as the current employee.
