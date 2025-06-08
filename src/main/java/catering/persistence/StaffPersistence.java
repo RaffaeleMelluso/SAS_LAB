@@ -19,11 +19,11 @@ public class StaffPersistence implements StaffEventReceiver {
      */
     @Override
     public void updateStaffListAdded(StaffList staffList) {
-        LOGGER.info("Persisting staff list addition: " + staffList.getId());
         try {
-            staffList.saveStaffList();
+            if (staffList.getId() == 0) staffList.saveStaffList();
+            else staffList.updateStaffList();
         } catch (StaffException e) {
-            LOGGER.severe("Failed to persist staff list addition: " + e.getMessage());
+            LOGGER.severe("Failed to persist staff list: " + e.getMessage());
         }
     }
 

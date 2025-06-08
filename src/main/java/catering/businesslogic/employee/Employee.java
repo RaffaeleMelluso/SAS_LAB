@@ -123,6 +123,31 @@ public class Employee {
     }
 
     /**
+     * Loads an employee by fiscal code from the database.
+     * 
+     * @param fiscalCode The employee's fiscal code
+     * @return The loaded Employee or null if not found
+     */
+    public static Employee loadByFiscalCode(String fiscalCode) {
+        Employee[] holder = new Employee[1];
+        String query = "SELECT * FROM Employees WHERE fiscal_code = ?";
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                Employee e = new Employee();
+                e.id = rs.getInt("id");
+                e.name = rs.getString("name");
+                e.fiscalCode = rs.getString("fiscal_code");
+                e.email = rs.getString("email");
+                e.phoneNumber = rs.getString("phone_number");
+                e.vacationDaysLeft = rs.getInt("vacation_days_left");
+                holder[0] = e;
+            }
+        }, fiscalCode);
+        return holder[0];
+    }
+
+    /**
      * Loads all employees from the database.
      * 
      * @return List of all employees

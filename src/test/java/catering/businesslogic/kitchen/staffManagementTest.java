@@ -72,12 +72,17 @@ public class staffManagementTest {
             assertNotNull(organizer, "Organizer user should be loaded");
             assertTrue(organizer.isOrganizer(), "User should have organizer role");
 
-            // Create test employees
-            testEmployee1 = new Employee("Test Employee 1", "TSTMPL80A01H501U");
-            testEmployee1.save();
-            
-            testEmployee2 = new Employee("Test Employee 2", "TSTMPL85A01H501X");
-            testEmployee2.save();
+            // Create test employees only if not already present
+            testEmployee1 = Employee.loadByFiscalCode("TSTMPL80A01H501U");
+            if (testEmployee1 == null) {
+                testEmployee1 = new Employee("Test Employee 1", "TSTMPL80A01H501U");
+                testEmployee1.save();
+            }
+            testEmployee2 = Employee.loadByFiscalCode("TSTMPL85A01H501X");
+            if (testEmployee2 == null) {
+                testEmployee2 = new Employee("Test Employee 2", "TSTMPL85A01H501X");
+                testEmployee2.save();
+            }
 
             LOGGER.info("Setup completed successfully");
 
@@ -99,7 +104,6 @@ public class staffManagementTest {
             // Create staff list
             StaffManager staffManager = app.getStaffManager();
             testStaffList = staffManager.createStaffList("Test Staff List", owner);
-
             // Verify staff list creation
             assertNotNull(testStaffList, "Staff list should not be null");
             assertEquals("Test Staff List", testStaffList.getName(), "Staff list name should match");

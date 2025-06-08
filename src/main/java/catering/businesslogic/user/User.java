@@ -198,9 +198,12 @@ public class User {
                     case 3:
                         u.roles.add(User.Role.SERVIZIO);
                         break;
+                    case 4:
+                        u.roles.add(User.Role.PROPRIETARIO);
+                        break;
                 }
             }
-        }, u.id); // Pass u.id as parameter
+        }, u.id);
     }
 
     /**

@@ -59,18 +59,11 @@ public class StaffManager {
      */
     public StaffList createStaffList(String name, User owner) throws StaffException {
         User currentUser = CatERing.getInstance().getUserManager().getCurrentUser();
-        if (!currentUser.isOwner()) {
-            throw new StaffException("Only owners can create staff lists");
-        }
-
-        if (name == null || name.trim().isEmpty()) {
-            throw new StaffException("Staff list name cannot be null or empty");
-        }
-        if (owner == null) {
-            throw new StaffException("Owner cannot be null");
-        }
-
-        StaffList staffList = new StaffList(name.trim(), owner);
+        if (!currentUser.isOwner()) throw new StaffException("Only owners can create staff lists");
+        if (name == null || name.trim().isEmpty()) throw new StaffException("Staff list name cannot be null or empty");
+        if (owner == null) throw new StaffException("Owner cannot be null");
+        if (StaffList.getInstance() != null) throw new StaffException("Staff list already exists");
+        StaffList staffList = StaffList.create(name.trim(), owner);
         this.currentStaffList = staffList;
 
         // Notify event receivers

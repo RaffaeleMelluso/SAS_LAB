@@ -24,8 +24,8 @@ catering/businesslogic/menu/Section$1.class
 catering/businesslogic/menu/MenuException.class
 catering/persistence/BatchUpdateHandler.class
 catering/businesslogic/user/User$Role.class
-catering/businesslogic/staff/StaffList$3.class
 catering/businesslogic/recipe/Recipe$3.class
+catering/businesslogic/employee/Employee$3.class
 catering/businesslogic/recipe/Preparation.class
 catering/businesslogic/event/EventReceiver.class
 catering/businesslogic/kitchen/SummarySheet.class
