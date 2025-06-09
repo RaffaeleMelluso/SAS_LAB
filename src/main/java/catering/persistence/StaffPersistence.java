@@ -48,8 +48,8 @@ public class StaffPersistence implements StaffEventReceiver {
     @Override
     public void updateContractDeleted(Contract contract) {
         LOGGER.info("Persisting contract deletion: " + contract.getContractId());
-        // Non serve chiamare deleteContract() qui perché è già stato fatto nel manager
-        // Questo metodo serve per operazioni aggiuntive di persistenza se necessarie
+        // No need to call deleteContract() here because it has already been done in the manager
+        // This method serves for additional persistence operations if necessary
     }
 
     /**
@@ -59,8 +59,8 @@ public class StaffPersistence implements StaffEventReceiver {
     @Override
     public void updateContractCreated(Contract contract) {
         LOGGER.info("Persisting contract creation: " + contract.getContractId());
-        // Il contract è già stato salvato nel manager, qui possiamo fare logging aggiuntivo
-        // o altre operazioni di persistenza se necessarie
+        // Contract is already saved in the manager, here we can do additional logging
+        // or other persistence operations if necessary
     }
 
     /**
@@ -70,7 +70,7 @@ public class StaffPersistence implements StaffEventReceiver {
     @Override
     public void updateContractEngagementChanged(Contract contract) {
         LOGGER.info("Persisting contract engagement change: " + contract.getContractId());
-        // Il contract è già stato aggiornato nel manager
+        // Contract is already updated in the manager
     }
 
     /**
@@ -82,18 +82,12 @@ public class StaffPersistence implements StaffEventReceiver {
     public void updatePermanentEmployeeAdded(Employee employee, Team team) {
         LOGGER.info("Persisting permanent employee assignment: " + employee.getName() +
                    " to team " + team.getName());
-        // La persistenza dell'assignment viene gestita dal TeamManager
+        // The employee is already added to the team in the manager
     }
 
     /**
      * Handles persistence when a vacation request is evaluated.
      * @param vacation The vacation request that was evaluated
-     * 
-     * N.B.: Qui bisogna passare lo stato desiderato!
-     * Questo metodo dovrebbe essere chiamato con lo stato già aggiornato,
-     * oppure va passato lo stato come parametro (meglio!).
-     * 
-     * Se vuoi mantenere questa firma, puoi solo fare update().
      */
     @Override
     public void updateEvaluateVacationRequest(Vacation vacation) {
