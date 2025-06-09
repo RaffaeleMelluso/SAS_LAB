@@ -74,6 +74,9 @@ public class CatERing {
         System.out.println("- Event Manager: " + (app.getEventManager() != null ? "OK" : "NOT AVAILABLE"));
         System.out.println("- Kitchen Task Manager: " + (app.getKitchenTaskManager() != null ? "OK" : "NOT AVAILABLE"));
         System.out.println("- Shift Manager: " + (app.getShiftManager() != null ? "OK" : "NOT AVAILABLE"));
+        System.out.println("- Staff Manager: " + (app.getStaffManager() != null ? "OK" : "NOT AVAILABLE"));
+        System.out.println("- Team Manager: " + (app.getTeamManager() != null ? "OK" : "NOT AVAILABLE"));
+        System.out.println("- Employee Manager: " + (app.getEmployeeMgr() != null ? "OK" : "NOT AVAILABLE"));
     }
 
     public KitchenTaskManager getKitchenTaskManager() {
@@ -134,6 +137,18 @@ public class CatERing {
 
     public EmployeeManager getEmployeeMgr() {
         return employeeMgr;
+    }
+
+    public void setStaffManager(StaffManager staffManager) {
+        this.staffMgr = staffManager; 
+    }
+
+    public void setTeamManager(TeamManager teamManager) {
+        this.teamMgr = teamManager; 
+    }
+
+    public void setEmployeeManager(EmployeeManager employeeManager) {
+        this.employeeMgr = employeeManager; 
     }
 
 }

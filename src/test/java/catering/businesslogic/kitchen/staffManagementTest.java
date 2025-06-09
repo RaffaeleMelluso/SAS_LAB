@@ -222,25 +222,34 @@ public class staffManagementTest {
     @Order(5)
     void testOwnerEvaluatesVacationRequests() {
         LOGGER.info("Testing owner evaluates vacation requests");
-
+    
         try {
             // Login as owner
             app.getUserManager().fakeLogin(owner.getUserName());
-
+        
             StaffManager staffManager = app.getStaffManager();
-
+        
             // Create vacation request
             Date vacationStart = Date.valueOf("2025-07-01");
             Date vacationEnd = Date.valueOf("2025-07-15");
             Vacation vacation = new Vacation(testEmployee1, vacationStart, vacationEnd);
             vacation.save();
-
+        
             assertEquals("Non valutata", vacation.getState(), "Vacation should initially be not evaluated");
-
+        
+            // --- AGGIUNGI QUESTO BLOCCO ---
+            int daysBefore = testEmployee1.getVacationDaysLeft();
+            int expectedDays = daysBefore - 15; // dal 1 al 15 luglio inclusi = 15 giorni
+        
             // Evaluate vacation request - approve
             staffManager.evaluateVacationRequest(vacation, "Accettata");
             assertEquals("Accettata", vacation.getState(), "Vacation should be approved");
-
+        
+            // Ricarica l'employee dal DB per avere il valore aggiornato
+            Employee updatedEmployee = Employee.loadById(testEmployee1.getId());
+            assertEquals(expectedDays, updatedEmployee.getVacationDaysLeft(), 
+            "Vacation days left should be decreased by the number of vacation days");
+    
             // Create another vacation request and reject it
             Date vacationStart2 = Date.valueOf("2025-08-01");
             Date vacationEnd2 = Date.valueOf("2025-08-10");
